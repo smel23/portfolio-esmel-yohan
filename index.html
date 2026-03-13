@@ -19,7 +19,6 @@
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
   html { scroll-behavior: smooth; }
 
   body {
@@ -49,6 +48,182 @@
     pointer-events: none;
     z-index: 9998;
     transition: all 0.15s ease;
+  }
+
+  /* ===== DISQUE VINYLE DÉCORATIF EN ARRIÈRE-PLAN ===== */
+  #vinyl-bg {
+    position: fixed;
+    bottom: -60px;
+    right: -60px;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 50% 50%,
+      #fff 0%, #fff 8%,
+      #111 10%, #1a1a1a 18%,
+      #111 20%, #222 35%,
+      #111 36%, #1a1a1a 55%,
+      #111 56%, #222 75%,
+      #111 76%, #1a1a1a 100%
+    );
+    border: 3px solid #222;
+    opacity: 0.18;
+    z-index: 490;
+    pointer-events: none;
+    animation: spin-vinyl-bg 18s linear infinite;
+  }
+  #vinyl-bg.playing {
+    opacity: 0.32;
+    animation-duration: 6s;
+  }
+  @keyframes spin-vinyl-bg {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  /* ===== MINI MUSIC PLAYER ===== */
+  #music-player {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    z-index: 500;
+    background: var(--bg-dark);
+    border-radius: 20px;
+    padding: 14px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.45);
+    min-width: 220px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+
+  /* Ligne du haut : titre + eq bars */
+  .mp-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .mp-eq {
+    display: flex;
+    gap: 2px;
+    align-items: flex-end;
+    height: 16px;
+    flex-shrink: 0;
+  }
+  .mp-eq-bar {
+    width: 3px;
+    background: var(--accent);
+    border-radius: 2px;
+    transition: height 0.2s;
+  }
+  .mp-eq-bar:nth-child(1) { height: 4px; }
+  .mp-eq-bar:nth-child(2) { height: 10px; }
+  .mp-eq-bar:nth-child(3) { height: 6px; }
+  .mp-eq-bar:nth-child(4) { height: 13px; }
+  .mp-eq-bar:nth-child(5) { height: 4px; }
+
+  #music-player.playing .mp-eq-bar {
+    animation: eq-bounce 0.6s ease-in-out infinite alternate;
+  }
+  #music-player.playing .mp-eq-bar:nth-child(1) { animation-delay: 0s; }
+  #music-player.playing .mp-eq-bar:nth-child(2) { animation-delay: 0.1s; }
+  #music-player.playing .mp-eq-bar:nth-child(3) { animation-delay: 0.2s; }
+  #music-player.playing .mp-eq-bar:nth-child(4) { animation-delay: 0.05s; }
+  #music-player.playing .mp-eq-bar:nth-child(5) { animation-delay: 0.15s; }
+
+  @keyframes eq-bounce {
+    from { transform: scaleY(0.35); }
+    to   { transform: scaleY(1); }
+  }
+
+  .mp-track-info {
+    flex: 1;
+    overflow: hidden;
+  }
+  .mp-label {
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 2px;
+  }
+  .mp-track-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--white);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Barre de progression */
+  .mp-progress {
+    height: 3px;
+    background: rgba(255,255,255,0.12);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .mp-progress-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 2px;
+    width: 0%;
+    transition: width 0.5s linear;
+  }
+
+  /* Boutons de contrôle */
+  .mp-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .mp-btn {
+    background: none;
+    border: none;
+    cursor: none;
+    color: rgba(255,255,255,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    width: 32px; height: 32px;
+    transition: color 0.2s, background 0.2s, transform 0.15s;
+    font-size: 14px;
+  }
+  .mp-btn:hover {
+    color: var(--white);
+    background: rgba(255,255,255,0.08);
+    transform: scale(1.1);
+  }
+
+  .mp-btn.play-pause {
+    width: 40px; height: 40px;
+    background: var(--accent);
+    color: var(--bg-dark);
+    border-radius: 50%;
+    font-size: 16px;
+  }
+  .mp-btn.play-pause:hover {
+    background: var(--accent2);
+    color: var(--white);
+    transform: scale(1.08);
+  }
+
+  /* Numéro de piste */
+  .mp-counter {
+    font-size: 9px;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.1em;
+    text-align: center;
+  }
+
+  @media (max-width: 900px) {
+    #music-player { right: 16px; bottom: 16px; min-width: 190px; }
   }
 
   /* NAV */
@@ -212,7 +387,7 @@
     transform: translateY(-2px);
   }
 
-  /* Avatar placeholder */
+  /* ===== PHOTO ZONE ===== */
   .avatar-container {
     width: 320px; height: 420px;
     position: relative;
@@ -224,18 +399,33 @@
     background: linear-gradient(145deg, #1a1a1a 0%, #2d2d2d 100%);
     border-radius: 20px 20px 0 0;
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: center;
     overflow: hidden;
+    position: relative;
   }
 
-  /* Silhouette */
+  #photo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    border-radius: 20px 20px 0 0;
+    position: absolute;
+    inset: 0;
+    display: block;
+  }
+
   .avatar-silhouette {
     width: 200px; height: 320px;
     background: linear-gradient(180deg, #3a3a3a 0%, #222 100%);
     border-radius: 100px 100px 0 0;
     position: relative;
     bottom: 0;
+    flex-shrink: 0;
+    align-self: flex-end;
+    transition: opacity 0.4s;
+    display: none;
   }
   .avatar-silhouette::before {
     content: '';
@@ -264,6 +454,7 @@
     text-align: center;
     line-height: 1.3;
     animation: spin-slow 12s linear infinite;
+    z-index: 4;
   }
 
   @keyframes spin-slow {
@@ -414,6 +605,44 @@
   .project-card:hover { background: #1a1a1a; border-color: rgba(255,255,255,0.15); }
   .project-card:hover .project-arrow { transform: translate(4px, -4px); }
 
+  .project-card.featured {
+    border-color: rgba(200,241,53,0.2);
+    background: #0d1a00;
+  }
+  .project-card.featured:hover {
+    background: #111f00;
+    border-color: rgba(200,241,53,0.45);
+  }
+  .project-card.featured .project-name { color: var(--accent); }
+  .project-card.featured .project-arrow { color: var(--accent); }
+  .project-card.featured .project-arrow:hover { color: var(--white); }
+
+  .live-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: rgba(200,241,53,0.12);
+    border: 1px solid rgba(200,241,53,0.3);
+    padding: 4px 10px;
+    border-radius: 100px;
+    margin-bottom: 8px;
+  }
+  .live-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: pulse-dot 1.4s ease-in-out infinite;
+  }
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.7); }
+  }
+
   .project-tag {
     display: inline-flex;
     align-items: center;
@@ -459,6 +688,10 @@
     border-radius: 100px;
     letter-spacing: 0.05em;
   }
+  .project-card.featured .tech-pill {
+    background: rgba(200,241,53,0.08);
+    color: rgba(200,241,53,0.7);
+  }
 
   .project-arrow {
     display: inline-flex;
@@ -472,14 +705,14 @@
   }
   .project-arrow:hover { color: var(--accent); }
 
-  /* CONTACT */
+  /* ===== CONTACT ===== */
   #contact {
     padding: 120px 48px;
     background: var(--bg-light);
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 80px;
-    align-items: center;
+    align-items: start;
   }
 
   .contact-left .section-title { margin-bottom: 24px; }
@@ -489,12 +722,134 @@
     color: var(--text-muted);
     line-height: 1.7;
     max-width: 380px;
+    margin-bottom: 40px;
   }
 
+  /* ===== CONTACT INFOS CARDS ===== */
+  .contact-infos {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .contact-info-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 20px;
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    background: var(--bg-light);
+    text-decoration: none;
+    color: var(--text-dark);
+    transition: all 0.25s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .contact-info-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--bg-dark);
+    transform: translateX(-100%);
+    transition: transform 0.35s cubic-bezier(0.77,0,0.175,1);
+    z-index: 0;
+  }
+
+  .contact-info-card:hover::before { transform: translateX(0); }
+  .contact-info-card:hover { border-color: var(--bg-dark); }
+  .contact-info-card:hover .ci-icon { background: var(--accent); color: var(--bg-dark); }
+  .contact-info-card:hover .ci-label { color: rgba(255,255,255,0.45); }
+  .contact-info-card:hover .ci-value { color: var(--white); }
+  .contact-info-card:hover .ci-arrow { color: var(--accent); }
+
+  .contact-info-card > * { position: relative; z-index: 1; }
+
+  .ci-icon {
+    width: 42px; height: 42px;
+    border-radius: 10px;
+    background: rgba(10,10,10,0.07);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+    transition: all 0.25s;
+  }
+
+  /* Gmail */
+  .contact-info-card.gmail { border-color: rgba(234,67,53,0.25); }
+  .contact-info-card.gmail .ci-icon { background: rgba(234,67,53,0.08); }
+  .contact-info-card.gmail:hover::before { background: #EA4335; }
+  .contact-info-card.gmail:hover .ci-icon { background: rgba(255,255,255,0.15); }
+
+  /* Phone */
+  .contact-info-card.phone { border-color: rgba(10,10,10,0.15); }
+  .contact-info-card.phone .ci-icon { background: rgba(10,10,10,0.07); }
+  .contact-info-card.phone:hover::before { background: #1a1a1a; }
+
+  /* WhatsApp */
+  .contact-info-card.whatsapp { border-color: rgba(37,211,102,0.3); }
+  .contact-info-card.whatsapp .ci-icon { background: rgba(37,211,102,0.12); }
+  .contact-info-card.whatsapp:hover { border-color: #25D366; }
+  .contact-info-card.whatsapp:hover::before { background: #128C7E; }
+  .contact-info-card.whatsapp:hover .ci-icon { background: rgba(255,255,255,0.15); }
+
+  /* Snapchat */
+  .contact-info-card.snapchat { border-color: rgba(255,252,0,0.35); }
+  .contact-info-card.snapchat .ci-icon { background: rgba(255,252,0,0.12); }
+  .contact-info-card.snapchat:hover { border-color: #FFFC00; }
+  .contact-info-card.snapchat:hover::before { background: #222; }
+  .contact-info-card.snapchat:hover .ci-icon { background: #FFFC00; }
+
+  .ci-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  .ci-label {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    transition: color 0.25s;
+  }
+
+  .ci-value {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    transition: color 0.25s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .ci-arrow {
+    font-size: 16px;
+    color: var(--text-muted);
+    transition: color 0.25s;
+    flex-shrink: 0;
+  }
+
+  /* FORM SIDE */
   .contact-right {
     display: flex;
     flex-direction: column;
     gap: 16px;
+    padding-top: 8px;
+  }
+
+  .contact-form-label {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 4px;
   }
 
   .contact-form input,
@@ -571,21 +926,22 @@
   }
   .reveal.visible { opacity: 1; transform: translateY(0); }
 
-  /* SCROLLBAR */
   ::-webkit-scrollbar { width: 4px; }
   ::-webkit-scrollbar-track { background: var(--bg-light); }
   ::-webkit-scrollbar-thumb { background: var(--bg-dark); border-radius: 2px; }
 
-  /* RESPONSIVE */
   @media (max-width: 900px) {
     nav { padding: 20px 24px; }
     .nav-links { display: none; }
     .hero { grid-template-columns: 1fr; min-height: auto; }
     .hero-left { clip-path: none; padding: 80px 24px 60px; }
     .hero-right { height: 360px; }
-    #skills, #portfolio, #contact { padding: 80px 24px; }
+    #skills, #portfolio { padding: 80px 24px; }
+    #contact { padding: 80px 24px; grid-template-columns: 1fr; gap: 48px; }
     .projects-grid { grid-template-columns: 1fr; }
-    #contact { grid-template-columns: 1fr; gap: 48px; }
+    #music-btn { bottom: 90px; right: 20px; }
+    #vinyl-bg { width: 160px; height: 160px; bottom: -40px; right: -40px; }
+    .ci-value { font-size: 13px; }
   }
 </style>
 </head>
@@ -593,6 +949,57 @@
 
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
+
+<div id="vinyl-bg"></div>
+
+<!-- MINI MUSIC PLAYER -->
+<div id="music-player">
+
+  <!-- Ligne : EQ + nom du morceau -->
+  <div class="mp-top">
+    <div class="mp-eq">
+      <div class="mp-eq-bar"></div>
+      <div class="mp-eq-bar"></div>
+      <div class="mp-eq-bar"></div>
+      <div class="mp-eq-bar"></div>
+      <div class="mp-eq-bar"></div>
+    </div>
+    <div class="mp-track-info">
+      <div class="mp-label">En écoute</div>
+      <div class="mp-track-name" id="mp-track-name">son.mp3</div>
+    </div>
+  </div>
+
+  <!-- Barre de progression -->
+  <div class="mp-progress">
+    <div class="mp-progress-fill" id="mp-progress-fill"></div>
+  </div>
+
+  <!-- Contrôles -->
+  <div class="mp-controls">
+    <button class="mp-btn" id="mp-prev" title="Précédent" aria-label="Précédent">
+      <!-- Icône ⏮ -->
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg>
+    </button>
+
+    <button class="mp-btn play-pause" id="mp-play" title="Play / Pause" aria-label="Play Pause">
+      <!-- Icône Play -->
+      <svg id="icon-play" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+      <!-- Icône Pause (cachée) -->
+      <svg id="icon-pause" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="display:none"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+    </button>
+
+    <button class="mp-btn" id="mp-next" title="Suivant" aria-label="Suivant">
+      <!-- Icône ⏭ -->
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zm2.5-6 5.5 4V8l-5.5 4zM16 6h2v12h-2z"/></svg>
+    </button>
+  </div>
+
+  <!-- Compteur de piste -->
+  <div class="mp-counter" id="mp-counter">1 / 1</div>
+</div>
+
+<audio id="audio-player"></audio>
 
 <!-- NAV -->
 <nav>
@@ -611,13 +1018,13 @@
     <p class="hero-tag">Disponible pour missions</p>
     <p class="hero-greeting">Bonjour, je suis</p>
     <h1 class="hero-name">yohan ESMEl</h1>
-    <p class="hero-title">Développeur Full Stack / <span>UI · PHP · Laravel · Java</span></p>
+    <p class="hero-title">Développeur Full Stack / <span>Html · Css · SGBD · PHP · Laravel · Java</span></p>
     <div class="hero-socials">
-      <a href="mailto:exmelyohan@gmail.com" class="social-btn" title="Email">@</a>
+      <a href="https://mail.google.com/mail/?view=cm&to=exmelyohan@gmail.com" class="social-btn" title="Email">@</a>
       <a href="https://github.com/smel23/smel23.github.io" class="social-btn" title="GitHub">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.341-3.369-1.341-.454-1.155-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
       </a>
-      <a href="#" class="social-btn" title="LinkedIn">
+      <a href="https://www.linkedin.com/in/yohan-essis/" class="social-btn" title="LinkedIn">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
       </a>
     </div>
@@ -625,8 +1032,9 @@
 
   <div class="hero-right">
     <div class="avatar-container">
-      <div class="avatar-placeholder">
-        <div class="avatar-silhouette"></div>
+      <div class="avatar-placeholder" id="avatar-zone">
+        <img id="photo-img" src="photo2.jpeg" alt="Yohan ESMEL">
+        <div class="avatar-silhouette" id="avatar-silhouette"></div>
       </div>
     </div>
     <div class="hero-badge">OPEN<br>TO<br>WORK</div>
@@ -701,70 +1109,117 @@
   </div>
 
   <div class="projects-grid">
-    <div class="project-card reveal">
-      <span class="project-tag">⚡ Laravel · PHP</span>
-      <h3 class="project-name">Plateforme E-commerce</h3>
-      <p class="project-desc">Application complète avec gestion des produits, panier, paiement en ligne et tableau de bord admin. Authentification sécurisée via Laravel Sanctum.</p>
-      <div class="project-tech">
-        <span class="tech-pill">Laravel 10</span>
-        <span class="tech-pill">PHP 8.2</span>
-        <span class="tech-pill">MySQL</span>
-        <span class="tech-pill">Blade</span>
-        <span class="tech-pill">Stripe API</span>
+    <div class="project-card featured reveal">
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:24px; flex-wrap:wrap;">
+        <span class="project-tag">🌍 HTML · CSS · JS</span>
+        <span class="live-badge">Live</span>
       </div>
-      <a href="#" class="project-arrow">Voir le projet <span class="btn-arrow">↗</span></a>
-    </div>
-
-    <div class="project-card reveal">
-      <span class="project-tag">🌐 JS · CSS</span>
-      <h3 class="project-name">Dashboard Analytics</h3>
-      <p class="project-desc">Interface admin moderne avec visualisation de données en temps réel, filtres dynamiques et exports. Responsive design mobile-first.</p>
+      <h3 class="project-name">Espoir Tiers Monde</h3>
+      <p class="project-desc">Site web associatif dédié à la solidarité internationale. Présentation des missions humanitaires, actualités de terrain et formulaire de don en ligne. Design accessible et responsive.</p>
       <div class="project-tech">
+        <span class="tech-pill">HTML5</span>
+        <span class="tech-pill">CSS3</span>
         <span class="tech-pill">JavaScript</span>
-        <span class="tech-pill">Chart.js</span>
-        <span class="tech-pill">PHP API</span>
-        <span class="tech-pill">CSS Grid</span>
+        <span class="tech-pill">GitHub Pages</span>
       </div>
-      <a href="#" class="project-arrow">Voir le projet <span class="btn-arrow">↗</span></a>
-    </div>
-
-    <div class="project-card reveal">
-      <span class="project-tag">☕ Java</span>
-      <h3 class="project-name">API REST Spring Boot</h3>
-      <p class="project-desc">Backend microservice pour gestion de ressources humaines. Endpoints sécurisés JWT, documentation Swagger et tests unitaires JUnit.</p>
-      <div class="project-tech">
-        <span class="tech-pill">Java 17</span>
-        <span class="tech-pill">Spring Boot</span>
-        <span class="tech-pill">PostgreSQL</span>
-        <span class="tech-pill">JWT</span>
-        <span class="tech-pill">Swagger</span>
-      </div>
-      <a href="#" class="project-arrow">Voir le projet <span class="btn-arrow">↗</span></a>
+      <a href="https://smel23.github.io/espoir-tiers-monde/" target="_blank" rel="noopener noreferrer" class="project-arrow">
+        Voir le projet <span class="btn-arrow">↗</span>
+      </a>
     </div>
   </div>
 </section>
 
 <!-- CONTACT -->
 <section id="contact">
+
+  <!-- GAUCHE : infos + coordonnées -->
   <div class="contact-left reveal">
     <div class="section-header" style="margin-bottom:24px">
       <span class="section-number">03</span>
       <h2 class="section-title">Contact</h2>
     </div>
-    <p class="contact-subtitle">Vous avez un projet ? Une mission ? Parlons-en. Je suis ouvert aux opportunités en freelance ou en CDI.</p>
+    <p class="contact-subtitle">Vous avez un projet ? Une mission ? Parlons-en. Je suis pret pour acquerir de nouvelles compétences par le biais de projets collaboratifs.</p>
+
+    <!-- Cartes de coordonnées -->
+    <div class="contact-infos">
+
+      <!-- Gmail -->
+      <a href="https://mail.google.com/mail/?view=cm&to=exmelyohan@gmail.com" target="_blank" rel="noopener noreferrer" class="contact-info-card gmail">
+        <div class="ci-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.364l-6.545-4.636v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.273l6.545-4.636 1.528-1.145C21.69 2.28 24 3.434 24 5.457z" fill="#EA4335"/>
+            <path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.364V9.273l6.545-4.636 1.528-1.145C21.69 2.28 24 3.434 24 5.457z" fill="#FBBC05"/>
+            <path d="M0 5.457v13.909c0 .904.732 1.636 1.636 1.636h3.819V11.73L12 16.364V9.273L5.455 4.64 3.927 3.493C2.309 2.28 0 3.434 0 5.457z" fill="#34A853"/>
+            <path d="M12 9.273v7.09l-6.545-4.636V11.73l6.545-2.457z" fill="#C5221F"/>
+          </svg>
+        </div>
+        <div class="ci-text">
+          <span class="ci-label">Gmail</span>
+          <span class="ci-value">exmelyohan@gmail.com</span>
+        </div>
+        <span class="ci-arrow">↗</span>
+      </a>
+
+      <!-- Téléphone -->
+      <a href="tel:+2250000000000" class="contact-info-card phone">
+        <div class="ci-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" fill="currentColor"/>
+          </svg>
+        </div>
+        <div class="ci-text">
+          <span class="ci-label">Téléphone</span>
+          <!-- ✏️ Remplace par ton numéro -->
+          <span class="ci-value">+225 07 97 84 83 81</span>
+        </div>
+        <span class="ci-arrow">↗</span>
+      </a>
+
+      <!-- WhatsApp -->
+      <a href="https://wa.me/2250797848381" target="_blank" rel="noopener noreferrer" class="contact-info-card whatsapp">
+        <div class="ci-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="#25D366" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5 -.669 -.51 -.173 -.008 -.371 -.01 -.57 -.01 -.198 0 -.52 .074 -.792 .372 -.272 .297 -1.04 1.016 -1.04 2.479 0 1.462 
+        <div class="ci-text">
+          <span class="ci-label">WhatsApp</span>
+          <!-- ✏️ Remplace par ton numéro -->
+          <span class="ci-value">+225 07 97 84 83 81</span>
+        </div>
+        <span class="ci-arrow">↗</span>
+      </a>
+
+      <!-- Snapchat -->
+      <a href="https://snapchat.com/add/esmel.404" target="_blank" rel="noopener noreferrer" class="contact-info-card snapchat">
+        <div class="ci-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.84 14.56c-.06.15-.29.26-.69.35-.13.03-.27.06-.41.1-.34.1-.54.22-.65.42-.08.15-.07.33.02.56.48 1.24 1.37 1.34 1.66 1.37.1.01.18.01.22.04.09.06.14.17.14.3 0 .48-.64.68-1.38.68-.17 0-.34-.01-.5-.04-.34-.06-.63-.17-.88-.29-.4-.19-.73-.42-1.03-.65-.17-.13-.32-.2-.47-.2-.12 0-.25.04-.37.12-.64.43-1.35.67-2.09.67-.75 0-1.46-.24-2.1-.67-.12-.08-.25-.12-.37-.12-.15 0-.3.07-.47.2-.3.23-.63.46-1.03.65-.25.12-.54.23-.88.29-.16.03-.33.04-.5.04-.74 0-1.38-.2-1.38-.68 0-.13.05-.24.14-.3.04-.03.12-.03.22-.04.29-.03 1.18-.13 1.66-1.37.09-.23.1-.41.02-.56-.11-.2-.31-.32-.65-.42-.14-.04-.28-.07-.41-.1-.4-.09-.63-.2-.69-.35-.05-.14-.02-.3.09-.42.07-.08.17-.12.28-.12.14 0 .29.06.45.18.27.2.52.3.74.3.18 0 .33-.05.45-.16.01-.01.02-.03.03-.04-.05-.43-.08-.88-.08-1.33 0-1.58.54-2.9 1.61-3.93.99-.96 2.35-1.48 3.89-1.48s2.9.52 3.89 1.48c1.07 1.03 1.61 2.35 1.61 3.93 0 .45-.03.9-.08 1.33.01.01.02.03.03.04.12.11.27.16.45.16.22 0 .47-.1.74-.3.16-.12.31-.18.45-.18.11 0 .21.04.28.12.11.12.14.28.09.42z" fill="#FFFC00"/>
+          </svg>
+        </div>
+        <div class="ci-text">
+          <span class="ci-label">Snapchat</span>
+          <!-- ✏️ Remplace par ton username Snap -->
+          <span class="ci-value">@esmel.404</span>
+        </div>
+        <span class="ci-arrow">↗</span>
+      </a>
+
+    </div>
   </div>
 
+  <!-- DROITE : formulaire -->
   <div class="contact-right reveal">
-    <form class="contact-form">
-      <input type="text" placeholder="Votre nom">
-      <input type="email" placeholder="Votre email">
-      <input type="text" placeholder="Sujet du message">
-      <textarea placeholder="Décrivez votre projet..."></textarea>
+    <p class="contact-form-label">Envoyer un message</p>
+    <form class="contact-form" id="contact-form">
+      <input type="text"   id="form-nom"     placeholder="Votre nom" required>
+      <input type="email"  id="form-email"   placeholder="Votre email" required>
+      <input type="text"   id="form-sujet"   placeholder="Sujet du message" required>
+      <textarea            id="form-message" placeholder="Décrivez votre projet..." required></textarea>
       <button type="submit" class="btn-submit">
-        Envoyer le message <span class="btn-arrow">↗</span>
+        Envoyer sur WhatsApp <span class="btn-arrow">↗</span>
       </button>
     </form>
   </div>
+
 </section>
 
 <!-- FOOTER -->
@@ -774,35 +1229,43 @@
   <span>PHP · Laravel · HTML · CSS · JS · Java</span>
 </footer>
 
-<script>
-  // Cursor
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  /* ===== CURSOR ===== */
   const cursor = document.getElementById('cursor');
-  const ring = document.getElementById('cursorRing');
+  const ring   = document.getElementById('cursorRing');
   let mx = 0, my = 0, rx = 0, ry = 0;
 
   document.addEventListener('mousemove', e => {
     mx = e.clientX; my = e.clientY;
     cursor.style.left = mx - 6 + 'px';
-    cursor.style.top = my - 6 + 'px';
+    cursor.style.top  = my - 6 + 'px';
   });
 
   function animateRing() {
     rx += (mx - rx - 18) * 0.12;
     ry += (my - ry - 18) * 0.12;
     ring.style.left = rx + 'px';
-    ring.style.top = ry + 'px';
+    ring.style.top  = ry + 'px';
     requestAnimationFrame(animateRing);
   }
   animateRing();
 
-  // Reveal on scroll
+  /* ===== PHOTO — fallback silhouette si photo.jpeg absente ===== */
+  const photoImg   = document.getElementById('photo-img');
+  const silhouette = document.getElementById('avatar-silhouette');
+
+  photoImg.addEventListener('error', () => {
+    photoImg.style.display = 'none';
+    silhouette.style.display = 'block';
+  });
+
+  /* ===== REVEAL ON SCROLL ===== */
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver(entries => {
     entries.forEach((entry, i) => {
       if (entry.isIntersecting) {
         setTimeout(() => {
           entry.target.classList.add('visible');
-          // Animate skill bars
           const fill = entry.target.querySelector('.skill-level-fill');
           if (fill) {
             const target = getComputedStyle(fill).getPropertyValue('--target').trim();
@@ -812,8 +1275,121 @@
       }
     });
   }, { threshold: 0.15 });
-
   reveals.forEach(el => observer.observe(el));
+
+  /* ===== FORMULAIRE → WHATSAPP ===== */
+  // ✏️ Remplace par ton vrai numéro WhatsApp (sans + ni espaces)
+  const WA_NUMBER = '225 07 97 84 83 81'.replace(/\s/g, '') ;
+
+  document.getElementById('contact-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const nom     = document.getElementById('form-nom').value.trim();
+    const email   = document.getElementById('form-email').value.trim();
+    const sujet   = document.getElementById('form-sujet').value.trim();
+    const message = document.getElementById('form-message').value.trim();
+    const texte =
+      `👋 *Nouveau message depuis ton portfolio*\n\n` +
+      `*Nom :* ${nom}\n` +
+      `*Email :* ${email}\n` +
+      `*Sujet :* ${sujet}\n\n` +
+      `*Message :*\n${message}`;
+    const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(texte)}`;
+    window.open(url, '_blank');
+  });
+
+  /* ===== MINI MUSIC PLAYER ===== */
+  const player      = document.getElementById('music-player');
+  const audioPlayer = document.getElementById('audio-player');
+  const vinylBg     = document.getElementById('vinyl-bg');
+  const mpPlay      = document.getElementById('mp-play');
+  const mpPrev      = document.getElementById('mp-prev');
+  const mpNext      = document.getElementById('mp-next');
+  const mpTrackName = document.getElementById('mp-track-name');
+  const mpCounter   = document.getElementById('mp-counter');
+  const mpFill      = document.getElementById('mp-progress-fill');
+  const iconPlay    = document.getElementById('icon-play');
+  const iconPause   = document.getElementById('icon-pause');
+
+  // ✏️ AJOUTE tes fichiers mp3 ici (dans le même dossier que index.html)
+  const playlist = [
+    { src: 'son.mp3',   name: 'Morceau 1' },
+    { src: 'son2.mp3',  name: 'Morceau 2' },
+    { src: 'son3.mp3',  name: 'Morceau 3' },
+  ];
+
+  let currentIndex = 0;
+  let isPlaying    = false;
+
+  function loadTrack(index) {
+    const track = playlist[index];
+    audioPlayer.src = track.src;
+    mpTrackName.textContent = track.name;
+    mpCounter.textContent = (index + 1) + ' / ' + playlist.length;
+    mpFill.style.width = '0%';
+  }
+
+  function setPlaying(state) {
+    isPlaying = state;
+    if (state) {
+      iconPlay.style.display  = 'none';
+      iconPause.style.display = 'block';
+      player.classList.add('playing');
+      vinylBg.classList.add('playing');
+    } else {
+      iconPlay.style.display  = 'block';
+      iconPause.style.display = 'none';
+      player.classList.remove('playing');
+      vinylBg.classList.remove('playing');
+    }
+  }
+
+  mpPlay.addEventListener('click', () => {
+    if (isPlaying) {
+      audioPlayer.pause();
+      setPlaying(false);
+    } else {
+      audioPlayer.play().catch(() => {});
+      setPlaying(true);
+    }
+  });
+
+  mpPrev.addEventListener('click', () => {
+    currentIndex = (currentIndex - 1 + playlist.length) % playlist.length;
+    loadTrack(currentIndex);
+    if (isPlaying) audioPlayer.play().catch(() => {});
+  });
+
+  mpNext.addEventListener('click', () => {
+    currentIndex = (currentIndex + 1) % playlist.length;
+    loadTrack(currentIndex);
+    if (isPlaying) audioPlayer.play().catch(() => {});
+  });
+
+  // Piste suivante automatiquement à la fin
+  audioPlayer.addEventListener('ended', () => {
+    currentIndex = (currentIndex + 1) % playlist.length;
+    loadTrack(currentIndex);
+    audioPlayer.play().catch(() => {});
+  });
+
+  // Barre de progression
+  audioPlayer.addEventListener('timeupdate', () => {
+    if (audioPlayer.duration) {
+      mpFill.style.width = (audioPlayer.currentTime / audioPlayer.duration * 100) + '%';
+    }
+  });
+
+  // Chargement initial
+  loadTrack(currentIndex);
+
+  // Autoplay au premier clic sur la page
+  document.addEventListener('click', function startOnInteraction() {
+    if (!isPlaying) {
+      audioPlayer.play().then(() => setPlaying(true)).catch(() => {});
+    }
+    document.removeEventListener('click', startOnInteraction);
+  }, { once: true });
+
 </script>
 </body>
 </html>
