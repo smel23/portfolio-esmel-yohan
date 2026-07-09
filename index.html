@@ -29,6 +29,7 @@
     cursor: none;
   }
 
+  /* Custom Cursor */
   .cursor {
     position: fixed;
     width: 12px; height: 12px;
@@ -49,6 +50,7 @@
     transition: all 0.15s ease;
   }
 
+  /* ===== DISQUE VINYLE DÉCORATIF EN ARRIÈRE-PLAN ===== */
   #vinyl-bg {
     position: fixed;
     bottom: -60px;
@@ -79,6 +81,7 @@
     to { transform: rotate(360deg); }
   }
 
+  /* ===== MINI MUSIC PLAYER ===== */
   #music-player {
     position: fixed;
     bottom: 32px;
@@ -95,6 +98,7 @@
     transition: transform 0.3s ease, opacity 0.3s ease;
   }
 
+  /* Ligne du haut : titre + eq bars */
   .mp-top {
     display: flex;
     align-items: center;
@@ -155,6 +159,7 @@
     text-overflow: ellipsis;
   }
 
+  /* Barre de progression */
   .mp-progress {
     height: 3px;
     background: rgba(255,255,255,0.12);
@@ -169,6 +174,7 @@
     transition: width 0.5s linear;
   }
 
+  /* Boutons de contrôle */
   .mp-controls {
     display: flex;
     align-items: center;
@@ -208,6 +214,7 @@
     transform: scale(1.08);
   }
 
+  /* Numéro de piste */
   .mp-counter {
     font-size: 9px;
     color: rgba(255,255,255,0.3);
@@ -219,6 +226,7 @@
     #music-player { right: 16px; bottom: 16px; min-width: 190px; }
   }
 
+  /* NAV */
   nav {
     position: fixed;
     top: 0; left: 0; right: 0;
@@ -281,6 +289,7 @@
   .nav-cta:hover { background: var(--accent2) !important; color: var(--white) !important; }
   .nav-cta::after { display: none !important; }
 
+  /* HERO */
   .hero {
     min-height: 100vh;
     display: grid;
@@ -378,6 +387,7 @@
     transform: translateY(-2px);
   }
 
+  /* ===== PHOTO ZONE ===== */
   .avatar-container {
     width: 320px; height: 420px;
     position: relative;
@@ -445,6 +455,7 @@
     line-height: 1.3;
     animation: spin-slow 12s linear infinite;
     z-index: 4;
+    cursor: none;
   }
 
   @keyframes spin-slow {
@@ -452,6 +463,7 @@
     to { transform: rotate(360deg); }
   }
 
+  /* SKILLS */
   #skills {
     padding: 120px 48px;
     background: var(--bg-light);
@@ -524,7 +536,16 @@
   .skill-icon {
     font-size: 28px;
     margin-bottom: 20px;
-    transition: color 0.3s;
+    transition: color 0.3s, transform 0.3s;
+    display: inline-block;
+  }
+  .skill-card:hover .skill-icon {
+    animation: wiggle 0.5s ease-in-out;
+  }
+  @keyframes wiggle {
+    0%, 100% { transform: rotate(0deg) scale(1); }
+    25% { transform: rotate(-12deg) scale(1.15); }
+    75% { transform: rotate(12deg) scale(1.15); }
   }
 
   .skill-name {
@@ -565,6 +586,7 @@
     letter-spacing: 0.05em;
   }
 
+  /* PORTFOLIO */
   #portfolio {
     padding: 120px 48px;
     background: var(--bg-dark);
@@ -590,7 +612,7 @@
     transition: all 0.3s ease;
   }
 
-  .project-card:hover { background: #1a1a1a; border-color: rgba(255,255,255,0.15); }
+  .project-card:hover { background: #1a1a1a; border-color: rgba(255,255,255,0.15); transform: translateY(-6px); }
   .project-card:hover .project-arrow { transform: translate(4px, -4px); }
 
   .project-card.featured {
@@ -629,6 +651,26 @@
   @keyframes pulse-dot {
     0%, 100% { opacity: 1; transform: scale(1); }
     50% { opacity: 0.4; transform: scale(0.7); }
+  }
+
+  .new-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--bg-dark);
+    background: var(--accent2);
+    border: 1px solid var(--accent2);
+    padding: 4px 10px;
+    border-radius: 100px;
+    margin-bottom: 8px;
+    animation: badge-pop 1.8s ease-in-out infinite;
+  }
+  @keyframes badge-pop {
+    0%, 100% { transform: rotate(-3deg) scale(1); }
+    50% { transform: rotate(3deg) scale(1.06); }
   }
 
   .project-tag {
@@ -693,6 +735,7 @@
   }
   .project-arrow:hover { color: var(--accent); }
 
+  /* ===== CONTACT ===== */
   #contact {
     padding: 120px 48px;
     background: var(--bg-light);
@@ -712,6 +755,7 @@
     margin-bottom: 40px;
   }
 
+  /* ===== CONTACT INFOS CARDS ===== */
   .contact-infos {
     display: flex;
     flex-direction: column;
@@ -764,21 +808,25 @@
     transition: all 0.25s;
   }
 
+  /* Gmail */
   .contact-info-card.gmail { border-color: rgba(234,67,53,0.25); }
   .contact-info-card.gmail .ci-icon { background: rgba(234,67,53,0.08); }
   .contact-info-card.gmail:hover::before { background: #EA4335; }
   .contact-info-card.gmail:hover .ci-icon { background: rgba(255,255,255,0.15); }
 
+  /* Phone */
   .contact-info-card.phone { border-color: rgba(10,10,10,0.15); }
   .contact-info-card.phone .ci-icon { background: rgba(10,10,10,0.07); }
   .contact-info-card.phone:hover::before { background: #1a1a1a; }
 
+  /* WhatsApp */
   .contact-info-card.whatsapp { border-color: rgba(37,211,102,0.3); }
   .contact-info-card.whatsapp .ci-icon { background: rgba(37,211,102,0.12); }
   .contact-info-card.whatsapp:hover { border-color: #25D366; }
   .contact-info-card.whatsapp:hover::before { background: #128C7E; }
   .contact-info-card.whatsapp:hover .ci-icon { background: rgba(255,255,255,0.15); }
 
+  /* Snapchat */
   .contact-info-card.snapchat { border-color: rgba(255,252,0,0.35); }
   .contact-info-card.snapchat .ci-icon { background: rgba(255,252,0,0.12); }
   .contact-info-card.snapchat:hover { border-color: #FFFC00; }
@@ -818,6 +866,7 @@
     flex-shrink: 0;
   }
 
+  /* FORM SIDE */
   .contact-right {
     display: flex;
     flex-direction: column;
@@ -885,6 +934,7 @@
   .btn-submit:hover .btn-arrow { transform: translate(4px, -4px); }
   .btn-arrow { transition: transform 0.2s; }
 
+  /* FOOTER */
   footer {
     background: var(--bg-dark);
     color: rgba(255,255,255,0.4);
@@ -898,6 +948,7 @@
 
   footer .logo { color: var(--white); }
 
+  /* ANIMATIONS */
   .reveal {
     opacity: 0;
     transform: translateY(30px);
@@ -909,6 +960,24 @@
   ::-webkit-scrollbar-track { background: var(--bg-light); }
   ::-webkit-scrollbar-thumb { background: var(--bg-dark); border-radius: 2px; }
 
+  /* ===== CONFETTI ===== */
+  .confetti-piece {
+    position: fixed;
+    top: -10px;
+    width: 8px;
+    height: 8px;
+    z-index: 9997;
+    pointer-events: none;
+    border-radius: 2px;
+    animation: confetti-fall linear forwards;
+  }
+  @keyframes confetti-fall {
+    to {
+      transform: translateY(105vh) rotate(720deg);
+      opacity: 0.3;
+    }
+  }
+
   @media (max-width: 900px) {
     nav { padding: 20px 24px; }
     .nav-links { display: none; }
@@ -918,6 +987,7 @@
     #skills, #portfolio { padding: 80px 24px; }
     #contact { padding: 80px 24px; grid-template-columns: 1fr; gap: 48px; }
     .projects-grid { grid-template-columns: 1fr; }
+    #music-btn { bottom: 90px; right: 20px; }
     #vinyl-bg { width: 160px; height: 160px; bottom: -40px; right: -40px; }
     .ci-value { font-size: 13px; }
   }
@@ -932,6 +1002,8 @@
 
 <!-- MINI MUSIC PLAYER -->
 <div id="music-player">
+
+  <!-- Ligne : EQ + nom du morceau -->
   <div class="mp-top">
     <div class="mp-eq">
       <div class="mp-eq-bar"></div>
@@ -946,23 +1018,32 @@
     </div>
   </div>
 
+  <!-- Barre de progression -->
   <div class="mp-progress">
     <div class="mp-progress-fill" id="mp-progress-fill"></div>
   </div>
 
+  <!-- Contrôles -->
   <div class="mp-controls">
     <button class="mp-btn" id="mp-prev" title="Précédent" aria-label="Précédent">
+      <!-- Icône ⏮ -->
       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg>
     </button>
+
     <button class="mp-btn play-pause" id="mp-play" title="Play / Pause" aria-label="Play Pause">
+      <!-- Icône Play -->
       <svg id="icon-play" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+      <!-- Icône Pause (cachée) -->
       <svg id="icon-pause" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="display:none"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
     </button>
+
     <button class="mp-btn" id="mp-next" title="Suivant" aria-label="Suivant">
+      <!-- Icône ⏭ -->
       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zm2.5-6 5.5 4V8l-5.5 4zM16 6h2v12h-2z"/></svg>
     </button>
   </div>
 
+  <!-- Compteur de piste -->
   <div class="mp-counter" id="mp-counter">1 / 1</div>
 </div>
 
@@ -982,10 +1063,10 @@
 <!-- HERO -->
 <section class="hero" id="about">
   <div class="hero-left">
-    <p class="hero-tag">Disponible pour missions</p>
+    <p class="hero-tag">Disponible pour missions 🚀</p>
     <p class="hero-greeting">Bonjour, je suis</p>
     <h1 class="hero-name">yohan ESMEl</h1>
-    <p class="hero-title">Développeur Full Stack / <span>Html · Css · SGBD · PHP · Laravel · Java</span></p>
+    <p class="hero-title">Développeur Full Stack / <span>Html · Css · SGBD · PHP · Laravel · Java</span> — et accro au café ☕</p>
     <div class="hero-socials">
       <a href="https://mail.google.com/mail/?view=cm&to=exmelyohan@gmail.com" class="social-btn" title="Email">@</a>
       <a href="https://github.com/smel23/smel23.github.io" class="social-btn" title="GitHub">
@@ -1000,11 +1081,11 @@
   <div class="hero-right">
     <div class="avatar-container">
       <div class="avatar-placeholder" id="avatar-zone">
-        <img id="photo-img" src="photo2.jpeg" alt="Yohan ESMEL">
+        <img id="photo-img" src="photo1.jpeg" alt="Yohan ESMEL">
         <div class="avatar-silhouette" id="avatar-silhouette"></div>
       </div>
     </div>
-    <div class="hero-badge">OPEN<br>TO<br>WORK</div>
+    <div class="hero-badge" id="hero-badge" title="Clique-moi 🎉">OPEN<br>TO<br>WORK</div>
   </div>
 </section>
 
@@ -1076,9 +1157,46 @@
   </div>
 
   <div class="projects-grid">
+
     <div class="project-card featured reveal">
       <div style="display:flex; align-items:center; gap:10px; margin-bottom:24px; flex-wrap:wrap;">
-        <span class="project-tag">🌍 HTML · CSS · JS · PHP · MySQL</span>
+        <span class="new-badge">✨ Nouveau</span>
+        <span class="live-badge">Live</span>
+      </div>
+      <h3 class="project-name">AliamGroup — Real-Time Startup Ecosystem</h3>
+      <p class="project-desc">Écosystème temps réel pour startups : visualisation dynamique de données, tableaux de bord interactifs et mises à jour instantanées pour piloter l'activité en un coup d'œil.</p>
+      <div class="project-tech">
+        <span class="tech-pill">HTML5</span>
+        <span class="tech-pill">CSS3</span>
+        <span class="tech-pill">JavaScript</span>
+        <span class="tech-pill">Real-Time</span>
+      </div>
+      <a href="https://smel23.github.io/aliamgroupe/" target="_blank" rel="noopener noreferrer" class="project-arrow">
+        Voir le projet <span class="btn-arrow">↗</span>
+      </a>
+    </div>
+
+    <div class="project-card featured reveal">
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:24px; flex-wrap:wrap;">
+        <span class="project-tag">🌍 HTML · CSS · JS</span>
+        <span class="live-badge">Live</span>
+      </div>
+      <h3 class="project-name">Espoir Tiers Monde</h3>
+      <p class="project-desc">Site web associatif dédié à la solidarité internationale. Présentation des missions humanitaires, actualités de terrain et formulaire de don en ligne. Design accessible et responsive.</p>
+      <div class="project-tech">
+        <span class="tech-pill">HTML5</span>
+        <span class="tech-pill">CSS3</span>
+        <span class="tech-pill">JavaScript</span>
+        <span class="tech-pill">GitHub Pages</span>
+      </div>
+      <a href="https://smel23.github.io/espoir-tiers-monde/" target="_blank" rel="noopener noreferrer" class="project-arrow">
+        Voir le projet <span class="btn-arrow">↗</span>
+      </a>
+    </div>
+
+    <div class="project-card featured reveal">
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:24px; flex-wrap:wrap;">
+        <span class="project-tag">🌍 HTML · CSS · JS</span>
         <span class="live-badge">Live</span>
       </div>
       <h3 class="project-name">The Traveller</h3>
@@ -1094,12 +1212,14 @@
         Voir le projet <span class="btn-arrow">↗</span>
       </a>
     </div>
+
   </div>
 </section>
 
 <!-- CONTACT -->
 <section id="contact">
 
+  <!-- GAUCHE : infos + coordonnées -->
   <div class="contact-left reveal">
     <div class="section-header" style="margin-bottom:24px">
       <span class="section-number">03</span>
@@ -1107,6 +1227,7 @@
     </div>
     <p class="contact-subtitle">Vous avez un projet ? Une mission ? Parlons-en. Je suis pret pour acquerir de nouvelles compétences par le biais de projets collaboratifs.</p>
 
+    <!-- Cartes de coordonnées -->
     <div class="contact-infos">
 
       <!-- Gmail -->
@@ -1144,8 +1265,8 @@
       <a href="https://wa.me/2250797848381" target="_blank" rel="noopener noreferrer" class="contact-info-card whatsapp">
         <div class="ci-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="#25D366" xmlns="http://www.w3.org/2000/svg">
-            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
-            <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.123 1.532 5.858L.057 23.448a.5.5 0 0 0 .609.61l5.642-1.475A11.934 11.934 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.812 9.812 0 0 1-5.011-1.373l-.36-.213-3.724.974.994-3.633-.235-.374A9.786 9.786 0 0 1 2.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/>
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.876 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+            <path d="M12.001 2C6.478 2 2 6.478 2 12c0 1.85.5 3.582 1.373 5.07L2 22l5.083-1.333A9.951 9.951 0 0 0 12.001 22C17.523 22 22 17.523 22 12S17.523 2 12.001 2zm0 18.15a8.14 8.14 0 0 1-4.15-1.14l-.297-.176-3.075.806.82-3-.194-.309a8.14 8.14 0 0 1-1.255-4.331c0-4.502 3.663-8.164 8.166-8.164 4.502 0 8.164 3.662 8.164 8.164 0 4.503-3.662 8.15-8.179 8.15z"/>
           </svg>
         </div>
         <div class="ci-text">
@@ -1216,7 +1337,7 @@
   }
   animateRing();
 
-  /* ===== PHOTO — fallback silhouette ===== */
+  /* ===== PHOTO — fallback silhouette si photo.jpeg absente ===== */
   const photoImg   = document.getElementById('photo-img');
   const silhouette = document.getElementById('avatar-silhouette');
 
@@ -1244,7 +1365,7 @@
   reveals.forEach(el => observer.observe(el));
 
   /* ===== FORMULAIRE → WHATSAPP ===== */
-  const WA_NUMBER = '22507978438381';
+  const WA_NUMBER = '225 07 97 84 83 81'.replace(/\s/g, '') ;
 
   document.getElementById('contact-form').addEventListener('submit', function(e) {
     e.preventDefault();
@@ -1260,6 +1381,39 @@
       `*Message :*\n${message}`;
     const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(texte)}`;
     window.open(url, '_blank');
+  });
+
+  /* ===== CONFETTI 🎉 ===== */
+  const confettiColors = ['#C8F135', '#FF4D1C', '#F5F3EE', '#0A0A0A'];
+
+  function launchConfetti(originX, originY, count = 40) {
+    for (let i = 0; i < count; i++) {
+      const piece = document.createElement('div');
+      piece.className = 'confetti-piece';
+      const size = 6 + Math.random() * 6;
+      piece.style.width = size + 'px';
+      piece.style.height = size + 'px';
+      piece.style.left = (originX + (Math.random() * 200 - 100)) + 'px';
+      piece.style.top = originY + 'px';
+      piece.style.background = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+      piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+      const duration = 1.8 + Math.random() * 1.4;
+      piece.style.animationDuration = duration + 's';
+      document.body.appendChild(piece);
+      setTimeout(() => piece.remove(), duration * 1000 + 100);
+    }
+  }
+
+  const heroBadge = document.getElementById('hero-badge');
+  heroBadge.addEventListener('click', (e) => {
+    launchConfetti(e.clientX, e.clientY, 50);
+  });
+
+  /* Petite pluie de confettis surprise au chargement */
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      launchConfetti(window.innerWidth / 2, 0, 30);
+    }, 900);
   });
 
   /* ===== MINI MUSIC PLAYER ===== */
@@ -1349,6 +1503,7 @@
     }
     document.removeEventListener('click', startOnInteraction);
   }, { once: true });
+
 </script>
 </body>
 </html>
